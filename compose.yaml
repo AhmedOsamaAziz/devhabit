@@ -1,0 +1,28 @@
+﻿services:
+  devhabit.api:
+    image: devhabit.api
+    build:
+      context: .
+      dockerfile: DevHabit.Api/Dockerfile
+    ports:
+      - 6000:8080
+      - 6001:8081
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      # Automatically picked up by .UseOtlpExporter() in Program.cs
+      ## Here the "devhabit.Aspire" is referring to the service name below
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://devhabit.aspire:18889  
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+    depends_on:
+      - devhabit.aspire
+
+  devhabit.aspire:
+      image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+      container_name: devhabit.aspire-dashboard
+      ports:
+        - "18888:18888" # Web UI in your browser: http://localhost:18888
+        - "18889:18889" # OTLP gRPC endpoint (also accessible from host if running API outside Docker)
+      environment:
+        - DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true
+    

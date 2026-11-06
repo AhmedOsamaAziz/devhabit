@@ -484,3 +484,5 @@ $RECYCLE.BIN/
 # macOS & JetBrains Rider
 .DS_Store
 .idea/
+
+.containers
