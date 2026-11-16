@@ -397,7 +397,7 @@ dotnet_diagnostic.CA1000.severity = none
 dotnet_diagnostic.CA1002.severity = none
 
 # CA1008: Enums should have zero value
-dotnet_diagnostic.CA1008.severity = none
+dotnet_diagnostic.CA1008.severity = error
 
 # CA1019: Define accessors for attribute arguments
 dotnet_diagnostic.CA1019.severity = none
@@ -570,6 +570,9 @@ dotnet_diagnostic.S2139.severity = none
 
 # S2325: Methods and properties that don't access instance data should be static
 dotnet_diagnostic.S2325.severity = none
+
+#S2346: Flags enumerations zero-value members should be named "None"
+dotnet_diagnostic.S2346.severity = error
 
 # S2365: Properties should not make collection or array copies
 dotnet_diagnostic.S2365.severity = none

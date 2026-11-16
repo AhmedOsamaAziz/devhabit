@@ -10,12 +10,25 @@
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__Database=Host=devhabit.postgres;Port=5432;Database=devhabit;Username=postgres;Password=postgres
       # Automatically picked up by .UseOtlpExporter() in Program.cs
       ## Here the "devhabit.Aspire" is referring to the service name below
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://devhabit.aspire:18889  
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
     depends_on:
       - devhabit.aspire
+      - devhabit.postgres
+
+  devhabit.postgres:
+    image: postgres:17.2
+    environment:
+      POSTGRES_DB: devhabit
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./.containers/postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   devhabit.aspire:
       image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
